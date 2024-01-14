@@ -1,0 +1,19 @@
+{
+	"folders": [
+		{
+			"path": "../../FYP"
+		},
+		{
+			"path": "../../../Downloads/css-parallax-main/css-parallax-main"
+		},
+		{
+			"path": ".."
+		},
+		{
+			"path": "../../../Downloads/Color-Guessing-Game/Color Guessing Game"
+		}
+	],
+	"settings": {
+		"liveServer.settings.multiRootWorkspaceName": "mylingo-main"
+	}
+}

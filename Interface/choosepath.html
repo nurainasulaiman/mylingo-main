@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Choose Path</title>
+    <link rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+    <style>
+        body {
+            font-family: 'League Spartan', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4c531;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            text-align: center;
+        }
+
+        h1{
+            color: #fff;
+        }
+
+        .container {
+            display: flex; /* Use flexbox to arrange divs in a row */
+            text-decoration: none;
+            
+        }
+
+        a {
+            text-decoration: none;
+            color: #fff;
+        }
+
+        .translate {
+            cursor: pointer;
+            margin: 30px;
+            transition: all;
+            background-color: #3498db;
+            color: #ffffff;
+            padding: 8px 24px;
+            width: 400px;
+            border-radius: 8px;
+            border: 1px solid #0c4d79;
+            border-bottom-width: 8px;
+        }
+
+        .translate:hover {
+            brightness: 110;
+            transform: translateY(-1px);
+            border-bottom-width: 6px;
+        }
+
+        .translate:active {
+            brightness: 90;
+            transform: translateY(2px);
+            border-bottom-width: 2px;
+        }
+
+        .learn {
+            cursor: pointer;
+            margin: 30px;
+            transition: all;
+            background-color: #3498db; /* Replace with your desired color code for bg-blue-500 */
+            color: #ffffff; /* Replace with your desired color code for text-white */
+            padding: 8px 24px; /* Adjust padding values as needed */
+            width: 400px;
+            border-radius: 8px; /* Adjust border-radius as needed */
+            border: 1px solid #0c4d79; /* Replace with your desired color code for border-blue-600 */
+            border-bottom-width: 8px; /* Adjust border-bottom-width as needed */
+        }
+
+        .learn:hover {
+            brightness: 110;
+            transform: translateY(-1px);
+            border-bottom-width: 6px;
+        }
+
+        .learn:active {
+            brightness: 90;
+            transform: translateY(2px);
+            border-bottom-width: 2px;
+        }
+    </style>
+</head>
+<body>
+<nav>
+    <h1>Choose your path</h2>
+    <div class="container">
+        <div class="translate">
+            <a href="translate.html">
+                <h3>Translating Sign Language</h3>
+                <p>Tap here to interpret signs and have conversations across differences in real time!</p>
+            </a>
+        </div>
+    
+        <div class="learn">
+            <a href="basics.html">
+                <h3>Learning Sign Language</h3>
+                <p>Answer the questions and find out how well you know your Malaysian Sign Language signs.</p>
+            </a>
+        </div>
+    </div>
+</nav>
+
+</body>
+</html>
