@@ -95,7 +95,7 @@ submitButton.addEventListener("click", function() {
       // Signed in
       const user = userCredential.user;
       console.log("Success! Welcome back!");
-      window.location.href= "parallax.html";
+      window.location.href= "lesson.html";
     //   window.alert("Success! Welcome back!");
       // ...
     })

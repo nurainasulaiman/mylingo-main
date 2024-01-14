@@ -78,7 +78,7 @@ button {
 }
 
 .option-div {
-  width: 100%;
+  width: 10em;
   height: 10em;
   padding: 1em;
   margin: 0.3em 0;
@@ -95,6 +95,7 @@ button {
   background-repeat: no-repeat;
   background-size: 100%;
   background-position: center;
+    
 }
 
 .correct {
