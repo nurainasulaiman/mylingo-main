@@ -1,222 +1,201 @@
-let timer = document.getElementsByClassName("timer")[0];
-let quizContainer = document.getElementById("container");
-let nextButton = document.getElementById("next-button");
-let numOfQuestions = document.getElementsByClassName("number-of-questions")[0];
-let displayContainer = document.getElementById("display-container");
-let scoreContainer = document.querySelector(".score-container");
-let restart = document.getElementById("restart");
-let userScore = document.getElementById("user-score");
-let startScreen = document.querySelector(".start-screen");
-let startButton = document.getElementById("start-button");
-let questionCount;
-let scoreCount = 0;
-let count = 10;
-let countdown;
-
-const Data = [
-  "static/img/friend.png",
-  "static/img/bang.png",
-  "static/img/goodluck.png",
-  "static/img/help.png",
-  "static/img/hi.png",
-  "static/img/no.png",
-  "static/img/ok.png",
-  "static/img/pay.png",
-  "static/img/love.png",
-  "static/img/play.png",
-  "static/img/please.png",
-  "static/img/rock.png",
-  "static/img/shocker.png",
-  "static/img/thanks.png",
-  "static/img/week.png",
-  "static/img/yes.png",
-  "static/img/baby.png",
-  "static/img/signlanguage.png",
-  "static/img/eat.png",
-  "static/img/sorry.png",
+let draggableObjects;
+let dropPoints;
+const startButton = document.getElementById("start");
+const result = document.getElementById("result");
+const controls = document.querySelector(".controls-container");
+const dragContainer = document.querySelector(".draggable-objects");
+const dropContainer = document.querySelector(".drop-points");
+const data = [
+    "bang",
+    "friend",
+    "goodluck",
+    "help",
+    "hi",
+    "no",
+    "ok",
+    "pay",
+    "love",
+    "play",
+    "please",
+    "rock",
+    "shocker",
+    "thanks",
+    "week",
+    "yes",
+    "baby",
+    "signlanguage",
+    "eat",
+    "sorry",
 ];
 
-//Questions and Options Array
-let quizArray = [];
+let deviceType = "";
+let initialX = 0,
+  initialY = 0;
+let currentElement = "";
+let moveElement = false;
 
-const generateRandomValue = (array) =>
-  array[Math.floor(Math.random() * array.length)];
-
-const populateOptions = (optionsArray, Data) => {
-  let expectedLength = 4;
-  while (optionsArray.length < expectedLength) {
-    let randomIndex = Math.floor(Math.random() * Data.length);
-    let imagePath = Data[randomIndex];
-    if (!optionsArray.includes(imagePath)) {
-      optionsArray.push(imagePath);
-    }
-  }
-  return optionsArray;
-};
-
-const populateQuiz = () => {
-  for (let i = 0; i < 5; i++) {
-    let currentDataIndex = Math.floor(Math.random() * Data.length);
-    let currentData = Data[currentDataIndex];
-    let correctImage = Data[currentDataIndex];
-
-    let allImages = [];
-    allImages.push(correctImage);
-    allImages = populateOptions(allImages, Data);
-
-    quizArray.push({
-      id: i,
-      correct: correctImage,
-      options: allImages,
-    });
+// Detect touch device
+const isTouchDevice = () => {
+  try {
+    document.createEvent("TouchEvent");
+    deviceType = "touch";
+    return true;
+  } catch (e) {
+    deviceType = "mouse";
+    return false;
   }
 };
 
-nextButton.addEventListener(
-  "click",
-  (displayNext = () => {
-    questionCount += 1; //increment questionCOunt
-    if (questionCount == quizArray.length) {  //If last question, hide question container and display score
-      displayContainer.classList.add("hide");
-      scoreContainer.classList.remove("hide");
-      userScore.innerHTML =   //User score
-        "Your score is " + scoreCount + " out of " + questionCount;
-    } else {
-      numOfQuestions.innerHTML =
-        questionCount + " of " + quizArray.length + " Question";
+let count = 0;
 
-      quizDisplay(questionCount);
-      count = 10;
-      clearInterval(countdown);
-      timerDisplay();
-    }
-    nextButton.classList.add("hide");
-  })
-);
-
-//Timer
-const timerDisplay = () => {
-  countdown = setInterval(() => {
-    timer.innerHTML = `<span>Time Left: </span> ${count}s`;
-    count--;
-    if (count == 0) {
-      clearInterval(countdown);
-      displayNext();
-    }
-  }, 1000);
+// Random value from Array
+const randomValueGenerator = () => {
+  return data[Math.floor(Math.random() * data.length)];
 };
 
-const quizDisplay = (questionCount) => {
-  let quizCards = document.querySelectorAll(".container-mid");
-  if (quizCards.length > 0 && quizCards[questionCount]) {
-    quizCards.forEach((card) => {
-      card.classList.add("hide");
-    });
+// Win Game Display
+const stopGame = () => {
+  controls.classList.remove("hide");
+  startButton.classList.remove("hide");
 
-    quizCards[questionCount].classList.remove("hide");
-  }
-};
-
-function quizCreator() {
-  quizArray.sort(() => Math.random() - 0.5);
-
-  for (let i of quizArray) {
-    i.options.sort(() => Math.random() - 0.5);
-
-    let div = document.createElement("div");
-    div.classList.add("container-mid", "hide");
-
-    numOfQuestions.innerHTML = 1 + " of " + quizArray.length + " Question";
-
-    let questionDiv = document.createElement("p");
-    questionDiv.classList.add("question");
-    let imageName = i.correct.split("/").pop().split(".")[0];
-    questionDiv.textContent = imageName;
-    div.appendChild(questionDiv);
-
-    div.innerHTML += `
-      <div class="button-container">
-        <button class="option-div" onclick="checker(this)" style="background-image: url('${i.options[0]}'); background-size: 136px;" Data-option="${i.options[0]}"></button>
-        <button class="option-div" onclick="checker(this)" style="background-image: url('${i.options[1]}'); background-size: 136px;" Data-option="${i.options[1]}"></button>
-        <button class="option-div" onclick="checker(this)" style="background-image: url('${i.options[2]}'); background-size: 136px;" Data-option="${i.options[2]}"></button>
-        <button class="option-div" onclick="checker(this)" style="background-image: url('${i.options[3]}'); background-size: 136px;" Data-option="${i.options[3]}"></button>
-      </div>
-    `;
-    quizContainer.appendChild(div);
-  }
-}
-
-function checker(userOption) {
-
-let userSolution = userOption.getAttribute("Data-option");
-let question = document.getElementsByClassName("container-mid")[questionCount];
-let options = question.querySelectorAll(".option-div");
-
-options.forEach((element) => {
-  element.disabled = true; // Disable all buttons
-});
-
-if (userSolution === quizArray[questionCount].correct) {
-  userOption.classList.add("correct");
-  scoreCount++;
-} else {
-  userOption.classList.add("incorrect");
-  options.forEach((element) => {
-    if (element.getAttribute("Data-option") == quizArray[questionCount].correct) {
-      element.classList.add("correct");
-    } else {
-      element.classList.remove("correct", "incorrect");
-    }
+  // Add an event listener to the redirect button
+  const redirectButton = document.getElementById("home-btn");
+  redirectButton.style.display = "block";
+  redirectButton.addEventListener("click", function() {
+      console.log("Redirecting to lesson.html...");
+      window.location.href = "lesson.html";
   });
+};
+
+// Drag & Drop Functions
+function dragStart(e) {
+  if (isTouchDevice()) {
+    initialX = e.touches[0].clientX;
+    initialY = e.touches[0].clientY;
+    moveElement = true;
+    currentElement = e.target;
+  } else {
+    e.dataTransfer.setData("text", e.target.id);
+  }
 }
 
-//clear interval
-clearInterval(countdown);
-//disable all options
-options.forEach((element) => {
-  element.disabled = true;
-});
-nextButton.classList.remove("hide");
+// Events fired on the drop target
+function dragOver(e) {
+  e.preventDefault();
 }
 
+// For touchscreen movement
+const touchMove = (e) => {
+  if (moveElement) {
+    e.preventDefault();
+    let newX = e.touches[0].clientX;
+    let newY = e.touches[0].clientY;
+    let currentSelectedElement = document.getElementById(e.target.id);
+    currentSelectedElement.parentElement.style.top =
+      currentSelectedElement.parentElement.offsetTop - (initialY - newY) + "px";
+    currentSelectedElement.parentElement.style.left =
+      currentSelectedElement.parentElement.offsetLeft - (initialX - newX) + "px";
+    initialX = newX;
+    initialY = newY;
+  }
+};
 
+const drop = (e) => {
+  e.preventDefault();
+  if (isTouchDevice()) {
+    moveElement = false;
+    const currentDrop = document.querySelector(`div[data-id='${e.target.id}']`);
+    const currentDropBound = currentDrop.getBoundingClientRect();
+    if (
+      initialX >= currentDropBound.left &&
+      initialX <= currentDropBound.right &&
+      initialY >= currentDropBound.top &&
+      initialY <= currentDropBound.bottom
+    ) {
+      currentDrop.classList.add("dropped");
+      currentElement.classList.add("hide");
+      currentDrop.innerHTML = ``;
+      currentDrop.insertAdjacentHTML(
+        "afterbegin",
+        `<img src="static/img/${currentElement.id}.png">`
+      );
+      count += 1;
+    }
+  } else {
+    const draggedElementData = e.dataTransfer.getData("text");
+    const droppableElementData = e.target.getAttribute("data-id");
+    if (draggedElementData === droppableElementData) {
+      const draggedElement = document.getElementById(draggedElementData);
+      e.target.classList.add("dropped");
+      draggedElement.classList.add("hide");
+      draggedElement.setAttribute("draggable", "false");
+      e.target.innerHTML = ``;
+      e.target.insertAdjacentHTML(
+        "afterbegin",
+        `<img src="static/img/${draggedElementData}.png">`
+      );
+      count += 1;
+    }
+  }
+  if (count == 3) {
+    result.innerText = `You Won!`;
+    stopGame();
+  }
+};
 
-function addClickHandlers() {
-  let optionButtons = document.querySelectorAll('.option-div');
-  optionButtons.forEach(button => {
-    button.addEventListener('click', function () {
-      checker(this);
-    });
+const creator = () => {
+  dragContainer.innerHTML = "";
+  dropContainer.innerHTML = "";
+  let randomData = [];
+  for (let i = 1; i <= 3; i++) {
+    let randomValue = randomValueGenerator();
+    if (!randomData.includes(randomValue)) {
+      randomData.push(randomValue);
+    } else {
+      i -= 1;
+    }
+  }
+  for (let i of randomData) {
+    const flagDiv = document.createElement("div");
+    flagDiv.classList.add("draggable-image");
+    flagDiv.setAttribute("draggable", true);
+    if (isTouchDevice()) {
+      flagDiv.style.position = "absolute";
+    }
+    flagDiv.innerHTML = `<img src="static/img/${i}.png" id="${i}">`;
+    dragContainer.appendChild(flagDiv);
+  }
+  randomData = randomData.sort(() => 0.5 - Math.random());
+  for (let i of randomData) {
+    const countryDiv = document.createElement("div");
+    countryDiv.innerHTML = `<div class='countries' data-id='${i}'>
+      ${i.charAt(0).toUpperCase() + i.slice(1).replace("-", " ")}
+    </div>`;
+    dropContainer.appendChild(countryDiv);
+  }
+};
+
+// Event listener for the "click" event on the startButton
+startButton.addEventListener("click", async () => {
+  currentElement = "";
+  controls.classList.add("hide");
+  startButton.classList.add("hide");
+  await creator();
+  count = 0;
+  dropPoints = document.querySelectorAll(".countries"); // Assign class "countries" to the dropPoints variable
+  draggableObjects = document.querySelectorAll(".draggable-image"); // Assign class "draggable-image" to the draggableObjects variable
+
+  // Attach event listeners to each draggable image
+  draggableObjects.forEach((element) => {
+    element.addEventListener("dragstart", dragStart);
+    element.addEventListener("touchstart", dragStart);
+    element.addEventListener("touchend", drop);
+    element.addEventListener("touchmove", touchMove);
   });
-}
 
-function initial() {
-  nextButton.classList.add("hide");
-  quizContainer.innerHTML = "";
-  questionCount = 0;
-  scoreCount = 0;
-  clearInterval(countdown);
-  count = 10;
-  timerDisplay();
-  quizCreator();
-  quizDisplay(questionCount);
-  addClickHandlers(); // Add event handlers dynamically
-}
-
-restart.addEventListener("click", () => {
-  quizArray = [];
-  populateQuiz();
-  initial();
-  displayContainer.classList.remove("hide");
-  scoreContainer.classList.add("hide");
+  // Attach event listeners to each drop point
+  dropPoints.forEach((element) => {
+    element.addEventListener("dragover", dragOver);
+    element.addEventListener("drop", drop);
+  });
 });
-
-startButton.addEventListener("click", () => {
-  startScreen.classList.add("hide");
-  displayContainer.classList.remove("hide");
-  quizArray = [];
-  populateQuiz();
-  initial();
-});
-
-initial();

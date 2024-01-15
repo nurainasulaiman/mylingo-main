@@ -51,13 +51,28 @@ body{
     color: #fff;
     font-size: 12px;
     padding: 10px 45px;
-    border: 1px solid transparent;
-    border-radius: 8px;
+    /* border: 1px solid transparent;
+    border-radius: 8px; */
+    border: 1px solid #333;
+    border-bottom-width: 6px;
+    border-radius: 4px;
     font-weight: 600;
     letter-spacing: 0.5px;
     text-transform: uppercase;
     margin-top: 10px;
     cursor: pointer;
+}
+
+.container button:hover {
+    brightness: 110;
+    transform: translateY(-1px);
+    border-bottom-width: 6px;
+}
+
+.container button:active {
+    brightness: 90;
+    transform: translateY(2px);
+    border-bottom-width: 2px;
 }
 
 .container button.hidden{
@@ -126,21 +141,6 @@ body{
         opacity: 1;
         z-index: 5;
     }
-}
-
-.social-icons{
-    margin: 20px 0;
-}
-
-.social-icons a{
-    border: 1px solid #ccc;
-    border-radius: 20%;
-    display: inline-flex;
-    justify-content: center;
-    align-items: center;
-    margin: 0 3px;
-    width: 40px;
-    height: 40px;
 }
 
 .toggle-container{

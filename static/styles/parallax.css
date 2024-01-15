@@ -48,26 +48,6 @@ nav ul li a{
 nav ul li a:hover{
     color: #fccf55;
 }
-.login{
-    text-decoration: none;
-    margin-right: 15px;
-    font-size: 18px;
-}
-.btn{
-    color: #000;
-    background: #fccf55;
-    border-radius: 6px;
-    padding: 9px 25px;
-    text-decoration: none;
-    transition: 0.5s;
-    font-size: 18px;
-}
-
-.btn:hover{
-    background: transparent;
-    border: 1px solid #001e4d;
-    color: #001e4d;
-}
 
 .content{
     margin-top: 10%;
@@ -83,19 +63,41 @@ nav ul li a:hover{
 a{
     color: #001e4d;
 }
+
 .link {
     margin-top: 30px;
+    position: relative;
 }
 .hire{
+    color: #fff;
     text-decoration: none;
-    background: transparent;
-    border: 1px solid #001e4d;
-    padding: 9px 25px;
-    font-weight: bold;
-    border-radius: 6px;
-    transition: 0.5s;
+    background: #fccf55;
+    font-weight: 600;
+    width: 150px;
+    border: 1px solid #faa504;
+    border-bottom-width: 6px;
+    border-radius: 4px;
+    padding: 20px;
+    margin: 20px auto 0;
+    cursor: pointer;
 }
-.link .hire:hover{
+
+.login{
+    color: #fff;
+    text-decoration: none;
+    background: #fccf55;
+    font-weight: 600;
+    width: 150px;
+    border: 1px solid #faa504;
+    border-bottom-width: 6px;
+    border-radius: 4px;
+    padding: 20px;
+    margin: 20px auto 0;
+    margin-left: 30px;
+    cursor: pointer;
+}
+
+/* .link .hire:hover{
     color: #312601;
     background: #fccf55;
     border: none;
@@ -103,6 +105,27 @@ a{
     margin: 0 0.5rem;
     animation: bounce;
     animation-duration: 3s;
+} */
+.hire:hover {
+    brightness: 110;
+    transform: translateY(-1px);
+    border-bottom-width: 6px;
+}
+.hire:active {
+    brightness: 90;
+    transform: translateY(2px);
+    border-bottom-width: 2px;
+}
+
+.login:hover {
+    brightness: 110;
+    transform: translateY(-1px);
+    border-bottom-width: 6px;
+}
+.login:active {
+    brightness: 90;
+    transform: translateY(2px);
+    border-bottom-width: 2px;
 }
 
 .logos {

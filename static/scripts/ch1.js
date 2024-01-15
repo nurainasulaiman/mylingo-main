@@ -1,189 +1,212 @@
-let draggableObjects;
-let dropPoints;
+const moves = document.getElementById("moves-count");
+const timeValue = document.getElementById("time");
 const startButton = document.getElementById("start");
+const stopButton = document.getElementById("stop");
+const gameContainer = document.querySelector(".game-container");
 const result = document.getElementById("result");
 const controls = document.querySelector(".controls-container");
-const dragContainer = document.querySelector(".draggable-objects");
-const dropContainer = document.querySelector(".drop-points");
-const data = [
-    "bang",
-    "friend",
-    "goodluck",
-    "help",
-    "hi",
-    "no",
-    "ok",
-    "pay",
-    "love",
-    "play",
-    "please",
-    "rock",
-    "shocker",
-    "thanks",
-    "week",
-    "yes",
-    "baby",
-    "signlanguage",
-    "eat",
-    "sorry",
+let cards;
+let interval;
+let firstCard = false;
+let secondCard = false;
+
+//Items array
+const items = [
+  { name: "bang", image: "static/img/bang.png" },
+  { name: "friend", image: "static/img/friend.png" },
+  { name: "goodluck", image: "static/img/goodluck.png" },
+  { name: "help", image: "static/img/help.png" },
+  { name: "no", image: "static/img/no.png" },
+  { name: "ok", image: "static/img/ok.png" },
+  { name: "pay", image: "static/img/pay.png" },
+  { name: "play", image: "static/img/play.png" },
+  { name: "rock", image: "static/img/rock.png" },
+  { name: "shocker", image: "static/img/shocker.png" },
+  { name: "week", image: "static/img/week.png" },
+  { name: "yes", image: "static/img/yes.png" },
 ];
 
-let deviceType = "";
-let initialX = 0,
-  initialY = 0;
-let currentElement = "";
-let moveElement = false;
+//Initial Time
+let seconds = 0,
+  minutes = 0;
+//Initial moves and win count
+let movesCount = 0,
+  winCount = 0;
 
-// Detect touch device
-const isTouchDevice = () => {
-  try {
-    document.createEvent("TouchEvent");
-    deviceType = "touch";
-    return true;
-  } catch (e) {
-    deviceType = "mouse";
-    return false;
-  }
-};
+//For timer
+function startCountdown() {
+  const countdownElement = document.getElementById("time");
 
-let count = 0;
+  // Set the total countdown time in seconds
+  let totalSeconds =  60; // 5 minutes
 
-// Random value from Array
-const randomValueGenerator = () => {
-  return data[Math.floor(Math.random() * data.length)];
-};
+  function updateCountdown() {
+    // Calculate remaining minutes and seconds
+    let minutes = Math.floor(totalSeconds / 60);
+    let seconds = totalSeconds % 60;
 
-// Win Game Display
-const stopGame = () => {
-  controls.classList.remove("hide");
-  startButton.classList.remove("hide");
-};
+    // Format the time before displaying
+    let minutesValue = minutes < 10 ? `0${minutes}` : minutes;
+    let secondsValue = seconds < 10 ? `0${seconds}` : seconds;
 
-// Drag & Drop Functions
-function dragStart(e) {
-  if (isTouchDevice()) {
-    initialX = e.touches[0].clientX;
-    initialY = e.touches[0].clientY;
-    moveElement = true;
-    currentElement = e.target;
-  } else {
-    e.dataTransfer.setData("text", e.target.id);
-  }
-}
+    // Display the countdown
+    countdownElement.innerHTML = `<span>Time Left:</span> ${minutesValue}:${secondsValue}`;
 
-// Events fired on the drop target
-function dragOver(e) {
-  e.preventDefault();
-}
+    // Check if the countdown has reached zero
+    if (totalSeconds === 0) {
+      clearInterval(countdownInterval);
+      console.log("Countdown is complete!");
+      stopGame();
+      result.innerHTML = `<h2>Times up!!</h2>`
 
-// For touchscreen movement
-const touchMove = (e) => {
-  if (moveElement) {
-    e.preventDefault();
-    let newX = e.touches[0].clientX;
-    let newY = e.touches[0].clientY;
-    let currentSelectedElement = document.getElementById(e.target.id);
-    currentSelectedElement.parentElement.style.top =
-      currentSelectedElement.parentElement.offsetTop - (initialY - newY) + "px";
-    currentSelectedElement.parentElement.style.left =
-      currentSelectedElement.parentElement.offsetLeft - (initialX - newX) + "px";
-    initialX = newX;
-    initialY = newY;
-  }
-};
-
-const drop = (e) => {
-  e.preventDefault();
-  if (isTouchDevice()) {
-    moveElement = false;
-    const currentDrop = document.querySelector(`div[data-id='${e.target.id}']`);
-    const currentDropBound = currentDrop.getBoundingClientRect();
-    if (
-      initialX >= currentDropBound.left &&
-      initialX <= currentDropBound.right &&
-      initialY >= currentDropBound.top &&
-      initialY <= currentDropBound.bottom
-    ) {
-      currentDrop.classList.add("dropped");
-      currentElement.classList.add("hide");
-      currentDrop.innerHTML = ``;
-      currentDrop.insertAdjacentHTML(
-        "afterbegin",
-        `<img src="static/img/${currentElement.id}.png">`
-      );
-      count += 1;
-    }
-  } else {
-    const draggedElementData = e.dataTransfer.getData("text");
-    const droppableElementData = e.target.getAttribute("data-id");
-    if (draggedElementData === droppableElementData) {
-      const draggedElement = document.getElementById(draggedElementData);
-      e.target.classList.add("dropped");
-      draggedElement.classList.add("hide");
-      draggedElement.setAttribute("draggable", "false");
-      e.target.innerHTML = ``;
-      e.target.insertAdjacentHTML(
-        "afterbegin",
-        `<img src="static/img/${draggedElementData}.png">`
-      );
-      count += 1;
-    }
-  }
-  if (count == 3) {
-    result.innerText = `You Won!`;
-    stopGame();
-  }
-};
-
-const creator = () => {
-  dragContainer.innerHTML = "";
-  dropContainer.innerHTML = "";
-  let randomData = [];
-  for (let i = 1; i <= 3; i++) {
-    let randomValue = randomValueGenerator();
-    if (!randomData.includes(randomValue)) {
-      randomData.push(randomValue);
     } else {
-      i -= 1;
+      // Decrement the total seconds
+      totalSeconds--;
     }
   }
-  for (let i of randomData) {
-    const flagDiv = document.createElement("div");
-    flagDiv.classList.add("draggable-image");
-    flagDiv.setAttribute("draggable", true);
-    if (isTouchDevice()) {
-      flagDiv.style.position = "absolute";
-    }
-    flagDiv.innerHTML = `<img src="static/img/${i}.png" id="${i}">`;
-    dragContainer.appendChild(flagDiv);
-  }
-  randomData = randomData.sort(() => 0.5 - Math.random());
-  for (let i of randomData) {
-    const countryDiv = document.createElement("div");
-    countryDiv.innerHTML = `<div class='countries' data-id='${i}'>
-      ${i.charAt(0).toUpperCase() + i.slice(1).replace("-", " ")}
-    </div>`;
-    dropContainer.appendChild(countryDiv);
-  }
+
+  // Call the updateCountdown function every second
+  const countdownInterval = setInterval(updateCountdown, 1000);
+
+}
+
+//For calculating moves
+const movesCounter = () => {
+  movesCount += 1;
+  moves.innerHTML = `<span>Moves:</span>${movesCount}`;
 };
 
-startButton.addEventListener("click", async () => {
-  currentElement = "";
-  controls.classList.add("hide");
-  startButton.classList.add("hide");
-  await creator();
-  count = 0;
-  dropPoints = document.querySelectorAll(".countries");
-  draggableObjects = document.querySelectorAll(".draggable-image");
+//Pick random objects from the items array
+const generateRandom = (size = 4) => {
+  //temporary array
+  let tempArray = [...items];
+  //initializes cardValues array
+  let cardValues = [];
+  //size should be double (4*4 matrix)/2 since pairs of objects would exist
+  size = (size * size) / 2;
+  //Random object selection
+  for (let i = 0; i < size; i++) {
+    const randomIndex = Math.floor(Math.random() * tempArray.length);
+    cardValues.push(tempArray[randomIndex]);
+    //once selected remove the object from temp array
+    tempArray.splice(randomIndex, 1);
+  }
+  return cardValues;
+};
 
-  draggableObjects.forEach((element) => {
-    element.addEventListener("dragstart", dragStart);
-    element.addEventListener("touchstart", dragStart);
-    element.addEventListener("touchend", drop);
-    element.addEventListener("touchmove", touchMove);
+const matrixGenerator = (cardValues, size = 4) => {
+  gameContainer.innerHTML = "";
+  cardValues = [...cardValues, ...cardValues];
+  //simple shuffle
+  cardValues.sort(() => Math.random() - 0.5);
+  for (let i = 0; i < size * size; i++) {
+
+
+    gameContainer.innerHTML += `
+      <div class="card-container" data-card-value="${cardValues[i].name}">
+          <div class="card-before">?</div>
+          <div class="card-after">
+              <img src="${cardValues[i].image}" class="image" style="width: 86px; height: 86px;"/>
+          </div>
+      </div>`;
+  }
+
+  //Grid
+  gameContainer.style.gridTemplateColumns = `repeat(${size},auto)`;
+
+  //Cards
+  cards = document.querySelectorAll(".card-container");
+  cards.forEach((card) => {
+    card.addEventListener("click", () => {
+      //If selected card is not matched yet then only run (i.e already matched card when clicked would be ignored)
+      if (!card.classList.contains("matched")) {
+        //flip the clicked card
+        card.classList.add("flipped");
+        //if it is the firstcard (!firstCard since firstCard is initially false)
+        if (!firstCard) {
+          //so current card will become firstCard
+          firstCard = card;
+          //current cards value becomes firstCardValue
+          firstCardValue = card.getAttribute("data-card-value");
+        } else {
+          //increment moves since user selected second card
+          movesCounter();
+          //secondCard and value
+          secondCard = card;
+          let secondCardValue = card.getAttribute("data-card-value");
+          if (firstCardValue == secondCardValue) {
+            //if both cards match add matched class so these cards would beignored next time
+            firstCard.classList.add("matched");
+            secondCard.classList.add("matched");
+            //set firstCard to false since next card would be first now
+            firstCard = false;
+            //winCount increment as user found a correct match
+            winCount += 1;
+            //check if winCount ==half of cardValues
+            if (winCount == Math.floor(cardValues.length / 2)) {
+              result.innerHTML = `<h2>You Won</h2>
+            <h4>Moves: ${movesCount}</h4>`;
+              stopGame();
+            }
+            } else {
+              //if the cards dont match
+              //flip the cards back to normal
+              let [tempFirst, tempSecond] = [firstCard, secondCard];
+              firstCard = false;
+              secondCard = false;
+              let delay = setTimeout(() => {
+                tempFirst.classList.remove("flipped");
+                tempSecond.classList.remove("flipped");
+              }, 900);
+            }
+        }
+      }
+    });
   });
-  dropPoints.forEach((element) => {
-    element.addEventListener("dragover", dragOver);
-    element.addEventListener("drop", drop);
-  });
+};
+
+//Start game
+startButton.addEventListener("click", () => {
+  movesCount = 0;
+  seconds = 0;
+  minutes = 0;
+  //controls amd buttons visibility
+  controls.classList.add("hide");
+  stopButton.classList.remove("hide");
+  startButton.classList.add("hide");
+  //Start timer
+  interval = startCountdown();
+  
+  //initial moves
+  moves.innerHTML = `<span>Moves:</span> ${movesCount}`;
+  initializer();
+
 });
+
+//Stop game
+stopButton.addEventListener(
+  "click",
+  (stopGame = () => {
+    controls.classList.remove("hide");
+    stopButton.classList.add("hide");
+    startButton.classList.remove("hide");
+    clearInterval(interval);
+
+      // Add an event listener to the redirect button
+        const redirectButton = document.getElementById("home-btn");
+        redirectButton.style.display = "block";
+        redirectButton.addEventListener("click", function() {
+        console.log("Redirecting to lesson.html...");
+        window.location.href = "lesson.html";
+    });
+  })
+);
+
+//Initialize values and func calls
+const initializer = () => {
+  result.innerText = "";
+  winCount = 0;
+  let cardValues = generateRandom();
+  console.log(cardValues);
+  matrixGenerator(cardValues);
+};

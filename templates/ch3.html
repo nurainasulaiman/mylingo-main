@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Chapter 2</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles/ch3.css') }}">
+
+    <!-- <link rel="stylesheet" href="ch3.css" /> -->
+  </head>
+  <body>
+    <div id="display-container">
+      <div class="header flex-space">
+        <div class="title">
+          <p>Sign Guessing Game</p>
+        </div>
+        <div class="timer"></div>
+      </div>
+
+      <div id="container">
+      </div>
+
+      <div class="flex-space">
+        <div class="number-of-count">
+          <span class="number-of-questions"></span>
+        </div>
+        <div id="next-button">Next</div>
+      </div>
+    </div>
+
+    <div class="start-screen">
+      <button id="start-button">Start</button>
+    </div>
+
+    <div class="score-container hide">
+      <div id="user-score"></div>
+      <button id="restart">Restart</button>
+      <button id="home-btn" style="display: none;">Back to Lesson</button>
+    </div>
+
+    <script src="ch2.js"></script>
+    <script src="{{ url_for('static', filename='scripts/ch3.js') }}"></script>
+
+  </body>
+</html>

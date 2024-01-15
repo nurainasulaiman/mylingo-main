@@ -32,7 +32,7 @@ checkBtn.addEventListener("click", e =>{
       removeContent();
       getCaptcha();
     }, 2000);
-    window.location.href = "parallax";
+    window.location.href = "parallax.html";
   }else{
     statusTxt.style.color = "#ff0000";
     statusTxt.innerText = "Captcha not matched. Please try again!";

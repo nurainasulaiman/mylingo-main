@@ -6,7 +6,9 @@
 }
 
 body {
-    background-color: #eeeeea;
+    background-color: #f4c531;
+    /* background-color: #c9d6ff;
+    background: linear-gradient(to right, #e2e2e2, #c9d6ff); */
 }
 
 .wrapper {
@@ -15,6 +17,7 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
+    /* position: relative; */
 }
 
 .container {
@@ -22,6 +25,33 @@ body {
     display: flex;
     flex-wrap: nowrap;
     justify-content: start;
+}
+
+#home-btn{
+    background: #fff;
+    position: absolute;
+    bottom: 40px;
+    color: #0c4d79;
+    font-weight: 500;
+    width: 150px;
+    border: 1px solid #0c4d79;
+    border-bottom-width: 6px;
+    border-radius: 4px;
+    padding: 10px;
+    margin: 20px auto 0;
+    cursor: pointer;
+}
+
+#home-btn:hover {
+    brightness: 110;
+    transform: translateY(-1px);
+    border-bottom-width: 6px;
+}
+
+#home-btn:active {
+    brightness: 90;
+    transform: translateY(2px);
+    border-bottom-width: 2px;
 }
 
 .card {
@@ -45,9 +75,11 @@ body {
 }
 
 .card > .row > .icon {
-    background: #223;
+    background: #3498db;
     color: white;
     border-radius: 50%;
+    border: 1px solid #0c4d79;
+    border-bottom-width: 6px;
     width: 50px;
     display: flex;
     justify-content: center;
@@ -91,14 +123,14 @@ input:checked + label .description {
 }
 
 .card[for="c1"] {
-    background-image: url('./img1.jpeg');
+    background-image: url('/static/img/ch1.png');
     cursor: pointer; /* Add pointer cursor to indicate clickable */
 }
 .card[for="c2"] {
-    background-image: url('./img2.jpeg');
+    background-image: url('/static/img/ch2.png');
 }
 .card[for="c3"] {
-    background-image: url('./img3.jpeg');
+    background-image: url('/static/img/ch3.png');
 }
 .card[for="c4"] {
     background-image: url('./img4.jpeg');
@@ -106,4 +138,16 @@ input:checked + label .description {
 
 .link {
     text-decoration: none; /* Remove underline for the link */
+}
+
+.link:hover {
+    brightness: 110;
+    transform: translateY(-1px);
+    border-bottom-width: 6px;
+}
+
+.link:active {
+    brightness: 90;
+    transform: translateY(2px);
+    border-bottom-width: 2px;
 }

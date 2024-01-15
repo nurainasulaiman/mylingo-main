@@ -1,4 +1,5 @@
-from flask import Flask, render_template
+from flask import Flask, render_template, jsonify
+import hand_landmarks_classification
 
 app = Flask(__name__)
 
@@ -14,13 +15,15 @@ def other_page():
 def choosepath():
     return render_template('choosepath.html')
 
-@app.route('/memory.html')
-def memory():
-    return render_template('memory.html')
-
 @app.route('/translate.html')
 def translate():
-    return render_template('translate.html')
+    # Call the translation function
+    result = hand_landmarks_classification.py()  # Adjust the function name
+    return jsonify({'result': result})
+
+# @app.route('/translate.html')
+# def translate():
+#     return render_template('translate.html')
 
 @app.route('/signlogin.html')
 def signlogin():

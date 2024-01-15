@@ -3,28 +3,28 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <meta http-equiv="refresh" content="5; url=/choosepath.html">
     <title>MyLingo Translate</title>
-    <link rel="stylesheet" href="https://pyscript.net/latest/pyscript.css" />
-    <script defer src="https://pyscript.net/latest/pyscript.js"></script>
   </head>
   
   <body style="text-align: center;">
     <br>
-    <button py-click="translate()">Translate Here</button><br><br><br>
+    <button id="translateBtn">Translate Here</button><br><br><br>
     <div id="manual-write" style="text-align: center;"></div>
+    <p>Redirecting to home page...</p>
 
-    <script type="text/python" src="FYP/Python Code/Collection_cnn.py"></script>
-
-    <script type="text/python">
-      # Your Python code here
-      def write_to_page(content):
-        # Display the content on the HTML page
-        document.getElementById('manual-write').innerText = content
-
-      def translate():
-        # Call the Python function or logic you want to execute
-        result = Collection_cnn.your_translation_function()  # Adjust the function name
-        write_to_page(result)
+    <script type="text/javascript">
+      document.getElementById('translateBtn').addEventListener('click', function() {
+        // Use AJAX or fetch to call the server-side Python script
+        // fetch('/translate')
+        fetch('/Python Code/hand_landmarks_classification.py')
+          .then(response => response.json())
+          .then(data => {
+            // Display the result on the HTML page
+            document.getElementById('manual-write').innerText = data.result;
+          })
+          .catch(error => console.error('Error:', error));
+      });
     </script>
   </body>
 </html>

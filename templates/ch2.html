@@ -2,45 +2,26 @@
 <html lang="en">
   <head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Chapter 2</title>
-    <link
-      href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap"
-      rel="stylesheet"
-    />
+    <title>Chapter 1</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet"/>
+    <!-- <link rel="stylesheet" href="ch1.css" /> -->
     <link rel="stylesheet" href="{{ url_for('static', filename='styles/ch2.css') }}">
 
-    <!-- <link rel="stylesheet" href="ch2.css" /> -->
   </head>
+
   <body>
-    <div id="display-container">
-      <div class="header flex-space">
-        <div class="title">
-          <p>Sign Guessing Game</p>
-        </div>
-        <div class="timer"></div>
-      </div>
-
-      <div id="container">
-      </div>
-
-      <div class="flex-space">
-        <div class="number-of-count">
-          <span class="number-of-questions"></span>
-        </div>
-        <div id="next-button">Next</div>
-      </div>
+    <div class="container">
+      <h3>Drag & Drop The Signs Over Their Respective Names</h3>
+      <div class="draggable-objects"></div>
+      <div class="drop-points"></div>
     </div>
-
-    <div class="start-screen">
-      <button id="start-button">Start</button>
+    <div class="controls-container">
+      <p id="result"></p>
+      <button id="start">Start Game</button>
+      <button id="home-btn" style="display: none;">Back to Lesson</button>
     </div>
-
-    <div class="score-container hide">
-      <div id="user-score"></div>
-      <button id="restart">Restart</button>
-    </div>
-
-    <script src="ch2.js"></script>
+    
+    <!-- <script src="ch1.js"></script> -->
     <script src="{{ url_for('static', filename='scripts/ch2.js') }}"></script>
 
   </body>
