@@ -4,7 +4,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Chapter 1</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet"/>
-    <link rel="stylesheet" href="ch1.css" />
+    <!-- <link rel="stylesheet" href="ch1.css" /> -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles/ch1.css') }}">
+
   </head>
 
   <body>
@@ -18,6 +20,8 @@
       <button id="start">Start</button>
     </div>
     
-    <script src="ch1.js"></script>
+    <!-- <script src="ch1.js"></script> -->
+    <script src="{{ url_for('static', filename='scripts/ch1.js') }}"></script>
+
   </body>
 </html>

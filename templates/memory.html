@@ -4,7 +4,9 @@
   <head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Memory Game</title>
-    <link rel="stylesheet" href="memory.css" />
+    <!-- <link rel="stylesheet" href="memory.css" /> -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles/memory.css') }}">
+
   </head>
   <body>
 
@@ -21,6 +23,10 @@
       <button id="start">Start Game</button>
     </div>
     
-    <script src="memory.js"></script>
+    <!-- <script src="memory.js"></script> -->
+    <script src="{{ url_for('static', filename='scripts/memory.js') }}"></script>
+    
   </body>
+
+
 </html>

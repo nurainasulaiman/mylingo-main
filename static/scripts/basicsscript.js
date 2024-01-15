@@ -1,7 +1,7 @@
 const questionsContainer = [
     {
         question: [
-            { name: "", image: "img/hi.png" },
+            { name: "", image: "static/img/hi.png" },
         ],
         answers: [
             {text: "Thank You", correct: false},
@@ -13,7 +13,7 @@ const questionsContainer = [
     },
     {
         question: [
-            { name: "", image: "img/no.png" },
+            { name: "", image: "static/img/no.png" },
         ],
         answers: [
             {text: "Thank You", correct: false},
@@ -25,7 +25,7 @@ const questionsContainer = [
     },
     {
         question: [
-            { name: "", image: "img/thanks.png" },
+            { name: "", image: "static/img/thanks.png" },
         ],
         answers: [
             {text: "Thank You", correct: true},
@@ -37,7 +37,7 @@ const questionsContainer = [
     },
     {
         question: [
-            { name: "", image: "img/yes.png" },
+            { name: "", image: "static/img/yes.png" },
         ],
         answers: [
             {text: "Thank You", correct: false},
@@ -49,7 +49,7 @@ const questionsContainer = [
     },
     {
         question: [
-            { name: "", image: "img/please.png" },
+            { name: "", image: "static/img/please.png" },
         ],
         answers: [
             {text: "Thank You", correct: false},

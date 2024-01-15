@@ -7,8 +7,9 @@
       href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap"
       rel="stylesheet"
     />
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles/ch2.css') }}">
 
-    <link rel="stylesheet" href="ch2.css" />
+    <!-- <link rel="stylesheet" href="ch2.css" /> -->
   </head>
   <body>
     <div id="display-container">
@@ -40,5 +41,7 @@
     </div>
 
     <script src="ch2.js"></script>
+    <script src="{{ url_for('static', filename='scripts/ch2.js') }}"></script>
+
   </body>
 </html>

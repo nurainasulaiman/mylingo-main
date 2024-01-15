@@ -109,7 +109,7 @@ const drop = (e) => {
       currentDrop.innerHTML = ``;
       currentDrop.insertAdjacentHTML(
         "afterbegin",
-        `<img src="images/${currentElement.id}.png">`
+        `<img src="static/img/${currentElement.id}.png">`
       );
       count += 1;
     }
@@ -124,7 +124,7 @@ const drop = (e) => {
       e.target.innerHTML = ``;
       e.target.insertAdjacentHTML(
         "afterbegin",
-        `<img src="img/${draggedElementData}.png">`
+        `<img src="static/img/${draggedElementData}.png">`
       );
       count += 1;
     }
@@ -154,7 +154,7 @@ const creator = () => {
     if (isTouchDevice()) {
       flagDiv.style.position = "absolute";
     }
-    flagDiv.innerHTML = `<img src="img/${i}.png" id="${i}">`;
+    flagDiv.innerHTML = `<img src="static/img/${i}.png" id="${i}">`;
     dragContainer.appendChild(flagDiv);
   }
   randomData = randomData.sort(() => 0.5 - Math.random());

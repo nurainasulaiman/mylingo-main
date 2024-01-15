@@ -12,18 +12,18 @@ let secondCard = false;
 
 //Items array
 const items = [
-  { name: "bang", image: "img/bang.png" },
-  { name: "friend", image: "img/friend.png" },
-  { name: "goodluck", image: "img/goodluck.png" },
-  { name: "help", image: "img/help.png" },
-  { name: "no", image: "img/no.png" },
-  { name: "ok", image: "img/ok.png" },
-  { name: "pay", image: "img/pay.png" },
-  { name: "play", image: "img/play.png" },
-  { name: "rock", image: "img/rock.png" },
-  { name: "shocker", image: "img/shocker.png" },
-  { name: "week", image: "img/week.png" },
-  { name: "yes", image: "img/yes.png" },
+  { name: "bang", image: "static/img/bang.png" },
+  { name: "friend", image: "static/img/friend.png" },
+  { name: "goodluck", image: "static/img/goodluck.png" },
+  { name: "help", image: "static/img/help.png" },
+  { name: "no", image: "static/img/no.png" },
+  { name: "ok", image: "static/img/ok.png" },
+  { name: "pay", image: "static/img/pay.png" },
+  { name: "play", image: "static/img/play.png" },
+  { name: "rock", image: "static/img/rock.png" },
+  { name: "shocker", image: "static/img/shocker.png" },
+  { name: "week", image: "static/img/week.png" },
+  { name: "yes", image: "static/img/yes.png" },
 ];
 
 //Initial Time
