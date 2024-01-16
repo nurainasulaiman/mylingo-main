@@ -60,7 +60,7 @@ model.add(layers.Dense(np.max(labels_encoded) + 1, activation='softmax'))
 model.compile(optimizer='adam', loss='sparse_categorical_crossentropy', metrics=['accuracy'])
 
 # Train the model without data augmentation
-history = model.fit(x_train, y_train, batch_size=32, epochs=100, validation_data=(x_test, y_test))
+history = model.fit(x_train, y_train, batch_size=32, epochs=70, validation_data=(x_test, y_test))
 
 # Evaluate the model
 y_predict_prob = model.predict(x_test)

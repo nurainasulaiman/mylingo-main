@@ -1,30 +1,39 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width,initial-scale=1" />
-    <meta http-equiv="refresh" content="5; url=/choosepath.html">
-    <title>MyLingo Translate</title>
-  </head>
-  
-  <body style="text-align: center;">
-    <br>
-    <button id="translateBtn">Translate Here</button><br><br><br>
-    <div id="manual-write" style="text-align: center;"></div>
-    <p>Redirecting to home page...</p>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hand Landmarks Classification</title>
+</head>
+<body>
+    <h1>Hand Landmarks Classification</h1>
+    
+    <video id="camera-feed" width="640" height="480" autoplay></video>
 
-    <script type="text/javascript">
-      document.getElementById('translateBtn').addEventListener('click', function() {
-        // Use AJAX or fetch to call the server-side Python script
-        // fetch('/translate')
-        fetch('/Python Code/hand_landmarks_classification.py')
-          .then(response => response.json())
-          .then(data => {
-            // Display the result on the HTML page
-            document.getElementById('manual-write').innerText = data.result;
-          })
-          .catch(error => console.error('Error:', error));
-      });
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            // Accessing the user's camera feed
+            const video = document.getElementById('camera-feed');
+            if (navigator.mediaDevices.getUserMedia) {
+                navigator.mediaDevices.getUserMedia({ video: true })
+                    .then(function (stream) {
+                        video.srcObject = stream;
+                    })
+                    .catch(function (error) {
+                        console.error('Error accessing camera:', error);
+                    });
+            }
+    
+            // Fetching data from the server
+            const apiUrl = 'http://127.0.0.1:5000/hand_landmarks_classification'; // Update the endpoint
+            fetch(apiUrl)
+                .then(response => response.json())
+                .then(data => {
+                    console.log('Predicted Label:', data.predicted_label);
+                })
+                .catch(error => console.error('Error fetching predicted label:', error));
+        });
     </script>
-  </body>
+    
+</body>
 </html>
